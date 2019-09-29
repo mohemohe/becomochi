@@ -1,4 +1,4 @@
-package v1
+package activitypub
 
 import (
 	"github.com/labstack/echo/v4"

@@ -20,7 +20,7 @@ type (
 	ActivityPubPerson struct {
 		AtContext   []interface{}              `json:"@context"`
 		ID          string                     `json:"id"`
-		Type        string                     `json:"person"`
+		Type        string                     `json:"type"`
 		ScreenName  string                     `json:"preferredUsername"`
 		DisplayName string                     `json:"name"`
 		Summary     string                     `json:"summary"`
@@ -60,7 +60,7 @@ func (this *User) ToActivityPubPerson(c echo.Context) ActivityPubPerson {
 		AtContext: []interface{}{
 			"https://www.w3.org/ns/activitystreams",
 		},
-		ID:          baseUrl + "/api/activitypub/" + this.ScreenName,
+		ID:          util.GetActorID(c, this.ScreenName),
 		Type:        "Person",
 		ScreenName:  this.ScreenName,
 		DisplayName: this.DisplayName,
@@ -71,11 +71,15 @@ func (this *User) ToActivityPubPerson(c echo.Context) ActivityPubPerson {
 			SharedInboxUrl: baseUrl + "/api/activitypub/_/inbox",
 		},
 		Icon: ActivityPubPersonIcon{
-		Type: "Image",
-		Mime: "image/png",
-		URL:  "https://media.mstdn.plusminus.io/accounts/avatars/000/000/001/original/b02a7a0d5d1646b0970ac0cd6396cd90.png",
-	},
+			Type: "Image",
+			Mime: "image/png",
+			URL:  "https://media.mstdn.plusminus.io/accounts/avatars/000/000/001/original/b02a7a0d5d1646b0970ac0cd6396cd90.png",
+		},
 	}
+}
+
+func (this *User) ToUserID() string {
+	return ""
 }
 
 // const (

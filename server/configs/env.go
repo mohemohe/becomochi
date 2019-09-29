@@ -14,6 +14,11 @@ type (
 			Database string `default:"parakeet"`
 			SSL      bool   `default:"false"`
 		}
+		Becomochi struct {
+			Api struct {
+				Key string `default:"root"`
+			}
+		}
 	}
 )
 

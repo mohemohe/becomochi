@@ -5,6 +5,7 @@ import (
 	"github.com/mohemohe/becomochi/server/util"
 	"github.com/mohemohe/temple"
 	"net/http"
+	"strings"
 )
 
 type (
@@ -17,6 +18,9 @@ type (
 		Type     string `json:"type,omitempty"`
 		Href     string `json:"href,omitempty"`
 		Template string `json:"template,omitempty"`
+	}
+	NodeInfo struct {
+		Links   []Link `json:"links"`
 	}
 )
 
@@ -40,8 +44,12 @@ func GetWellKnownWebFinger(c echo.Context) error {
 		return c.NoContent(http.StatusBadRequest)
 	}
 
-	// TODO: resource
+	acctURI := strings.TrimPrefix(resource, "acct:")
 	screenName := "mohemohe"
+	if acctURI != screenName + "@" + c.Request().Host {
+		return c.NoContent(404)
+	}
+
 	acct := WebFingerAccount{
 		Subject: "acct:" + screenName + "@" + c.Request().Host,
 		Links: []Link{
@@ -62,4 +70,18 @@ func GetWellKnownWebFinger(c echo.Context) error {
 		},
 	}
 	return c.JSON(200, acct)
+}
+
+func GetWellKnownNodeInfo(c echo.Context) error {
+	baseuUrl := util.BaseURL(c)
+	nodeInfo := NodeInfo{
+		Links: []Link{
+			{
+				Rel: "http://nodeinfo.diaspora.software/ns/schema/2.0",
+				Href: util.JoinURL(baseuUrl, "/api/nodeinfo/2.0"),
+			},
+		},
+	}
+
+	return c.JSON(http.StatusOK, nodeInfo)
 }
