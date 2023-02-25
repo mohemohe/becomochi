@@ -3,7 +3,6 @@ module github.com/mohemohe/becomochi/server
 go 1.13
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
 	github.com/go-bongo/bongo v0.10.5-0.20180517124215-761759e31d8f
 	github.com/go-bongo/go-dotaccess v0.0.0-20150208020959-ae070a2d2a38 // indirect
@@ -14,5 +13,5 @@ require (
 	github.com/oleiade/reflections v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.4.2
 	github.com/smartystreets/goconvey v0.0.0-20190731233626-505e41936337 // indirect
-	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
+	golang.org/x/crypto v0.1.0
 )
